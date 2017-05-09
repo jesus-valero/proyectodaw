@@ -7,4 +7,10 @@ class Home extends CI_Controller {
 
 		$this->load->view('home');
 	}
+
+	public function map()	{
+
+		$this->load->view('vMap');
+	}
+
 }
