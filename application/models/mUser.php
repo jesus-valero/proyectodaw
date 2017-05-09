@@ -17,7 +17,7 @@ class mUser extends CI_Model
         if (strcmp($password, $repassword) != 0)
             return -1;
 
-        $stmt = getdb()->prepare("select count(*) from users where usr_email = :currentEmail");
+        $stmt = getdb()->prepare("select count(*) from users where upper(usr_email) = upper(:currentEmail)");
         $stmt->bindValue(":currentEmail", $email);
         $stmt->execute();
 
@@ -44,7 +44,7 @@ class mUser extends CI_Model
 
     public function doLogin($email, $password)
     {
-        $stmt = getdb()->prepare("SELECT usr_salt from users where (usr_email) = ( :email)");
+        $stmt = getdb()->prepare("SELECT usr_salt from users where upper(usr_email) = upper( :email)");
         $stmt->bindValue(":email", $email);
         $stmt->execute();
         $salt = $stmt->fetchColumn(0);
