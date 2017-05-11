@@ -8,6 +8,7 @@
     #legend { font-family: Arial, sans-serif; background: #fff; padding: 10px; margin: 10px; border: 3px solid #000; }
     #legend h3 { margin-top: 0; }
     #legend img { vertical-align: middle; width: 30px;}
+    .info { font-size: 14px; color:hotpink; }
   }
 </style>
 </head>
@@ -25,22 +26,22 @@
      var pos = {lat: -36.828611, lng: 2.1178017};
 
      //array iconos para leyenda
-      var icons = {
-        bar: {
-          name: 'Bar',
-          icon: '../img/map/icons/bar.png'
-        },
-        arts: {
-          name: 'Arts',
-          icon: '../img/map/icons/arts.png'
-        },
-        sport: {
-          name: 'Sport',
-          icon: '../img/map/icons/sport.png'
-        }
-      };
+     var icons = {
+      bar: {
+        name: 'Bar',
+        icon: '../img/map/icons/bar.png'
+      },
+      arts: {
+        name: 'Arts',
+        icon: '../img/map/icons/arts.png'
+      },
+      sport: {
+        name: 'Sport',
+        icon: '../img/map/icons/sport.png'
+      }
+    };
 
-     var mapProp = {
+    var mapProp = {
         center: pos, //coordenadas decimales
         zoom:15, //valores de 1 a 23
         mapTypeId: google.maps.MapTypeId.ROADMAP, // valores ROADMAP, SATELLITE, HYBRID, TERRAIN
@@ -129,25 +130,30 @@
 
       var map=new google.maps.Map(document.getElementById("googleMap"),mapProp); //el mapa se pintará en id googleMap
 
-      //seguramente prescindiremos de labels mas adelante!!!!! en tal caso revisar var markers
-      // Create an array of alphabetical characters used to label the markers.
-      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';    
+      //instanciamos InfoWindow para poder pintar ventanas de info al clicar location
+      var infoWindow = new google.maps.InfoWindow();
 
-			// Añdimos marcadores contenidos en locations recorriendo el array y pintando segun position + label + icono      
+			// Añdimos marcadores contenidos en locations recorriendo el array y pintando segun position + label + icono 
       var markers = locations.map(function(location, i) {
-        return new google.maps.Marker({
-         position: location,
-         label: labels[i % labels.length],
-         icon: '/proyectodaw/img/map/icons/'+location.type+'.png'
-       });
+        var marker = new google.maps.Marker({
+          position: location,
+          icon: '/proyectodaw/img/map/icons/'+location.type+'.png',         
+        }); 
+
+        //al clicar un punto mostramos title + text
+        google.maps.event.addListener(marker, 'click', function(evt) {
+          infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.text+'<br><img src="/proyectodaw/img/map/icons/arts.png"></div>');
+          infoWindow.open(map, marker);
+        })
+
+        return marker;
       });
 
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-      //parte geolocalización
-      var infoWindow = new google.maps.InfoWindow({map: map});
+      
+      //parte geolocalización     
 
       // si el browser soporta geolocalización
       if (navigator.geolocation) {
@@ -156,17 +162,12 @@
             lat: position.coords.latitude,
             lng: position.coords.longitude        			
           };
-          //comentar las siguientes dos lineas para eliminar info
-          /*infoWindow.setPosition(pos);
-          infoWindow.setContent('Estás aqui, gañán!');*/          
+
           map.setCenter(pos);
         }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
+
         });
-      } else {
-        // si el browser no soporta geolocalización
-        handleLocationError(false, infoWindow, map.getCenter());
-      }      
+      }     
 
       //pintamos leyenda
       var legend = document.getElementById('legend');
@@ -178,44 +179,37 @@
         div.innerHTML = '<img src="' + icon + '"> ' + name;
         legend.appendChild(div);
       }
+
       //indicamos la posicion donde queremos la leyenda
       map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 
     }
-
-    //control de errores para geolocalización
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    } 
-
+   
     //array que contiene los datos que mas adelante recibiremos de la BBDD
     var locations = [
-    {lat: 41.5053062, lng: 2.1176510000000004, type: 'bar'},
-    {lat: 41.5153062, lng: 2.1176510000000004, type: 'sport'},
-    {lat: 41.5153062, lng: 2.1276510000000004, type: 'arts'},
-    {lat: 41.5053062, lng: 2.1276510000000004, type: 'bar'},
-    {lat: -33.851702, lng: 151.216968, type: 'bar'},
-    {lat: -34.671264, lng: 150.863657, type: 'sport'},
-    {lat: -35.304724, lng: 148.662905, type: 'arts'},
-    {lat: -36.817685, lng: 175.699196, type: 'bar'},
-    {lat: -36.828611, lng: 175.790222, type: 'sport'},
-    {lat: -37.750000, lng: 145.116667, type: 'arts'},
-    {lat: -37.759859, lng: 145.128708, type: 'bar'},
-    {lat: -37.765015, lng: 145.133858, type: 'sport'},
-    {lat: -37.770104, lng: 145.143299, type: 'sport'},
-    {lat: -37.773700, lng: 145.145187, type: 'arts'},
-    {lat: -37.774785, lng: 145.137978, type: 'bar'},
-    {lat: -37.819616, lng: 144.968119, type: 'sport'},
-    {lat: -38.330766, lng: 144.695692, type: 'arts'},
-    {lat: -39.927193, lng: 175.053218, type: 'sport'},
-    {lat: -41.330162, lng: 174.865694, type: 'arts'},
-    {lat: -42.734358, lng: 147.439506, type: 'bar'},
-    {lat: -42.734358, lng: 147.501315, type: 'arts'},
-    {lat: -42.735258, lng: 147.438000, type: 'bar'},
-    {lat: -43.999792, lng: 170.463352, type: 'arts'}
+    {lat: 41.5053062, lng: 2.1176510000000004, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: 41.5153062, lng: 2.1176510000000004, type: 'sport', title: 'Titulo Prueba 2', text: 'Texto de prueba 2'},
+    {lat: 41.5153062, lng: 2.1276510000000004, type: 'arts', title: 'Titulo Prueba 3', text: 'Texto de prueba 3'},
+    {lat: 41.5053062, lng: 2.1276510000000004, type: 'bar', title: 'Titulo Prueba 4', text: 'Texto de prueba 4'},
+    {lat: -33.851702, lng: 151.216968, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -34.671264, lng: 150.863657, type: 'sport', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -35.304724, lng: 148.662905, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -36.817685, lng: 175.699196, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -36.828611, lng: 175.790222, type: 'sport', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.750000, lng: 145.116667, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.759859, lng: 145.128708, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.765015, lng: 145.133858, type: 'sport', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.770104, lng: 145.143299, type: 'sport', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.773700, lng: 145.145187, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.774785, lng: 145.137978, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -37.819616, lng: 144.968119, type: 'sport', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -38.330766, lng: 144.695692, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -39.927193, lng: 175.053218, type: 'sport', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -41.330162, lng: 174.865694, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -42.734358, lng: 147.439506, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -42.734358, lng: 147.501315, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -42.735258, lng: 147.438000, type: 'bar', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'},
+    {lat: -43.999792, lng: 170.463352, type: 'arts', title: 'Titulo Prueba 1', text: 'Texto de prueba 1'}
     ]
 
   </script>
