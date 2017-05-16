@@ -72,6 +72,8 @@ class mTour extends CI_Model
 
         $result['tours'] = $tours;
 
+        return $result;
+
     }
 
 }
