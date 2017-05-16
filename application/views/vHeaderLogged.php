@@ -21,7 +21,8 @@
 <body>
 <header>
     <a href="<?php echo base_url('Tour'); ?>">Home</a>
-    <a href="<?php echo base_url('Login'); ?>">Iniciar sesion</a>
+    <a href="<?php echo base_url('Tour/create'); ?>">Crear tour</a>
+    <a href="<?php echo base_url('Login/closeSession'); ?>">Cerrar Sesión</a>
 </header>
 
 </body>

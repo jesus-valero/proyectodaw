@@ -42,7 +42,7 @@ class mUser extends CI_Model
         //mail($email, $subject, $message, $headers);
     }
 
-    public function doLogin($email, $password)
+    public function requestLogin($email, $password)
     {
         $stmt = getdb()->prepare("SELECT usr_salt from users where upper(usr_email) = upper( :email)");
         $stmt->bindValue(":email", $email);

@@ -1,37 +1,46 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Created by PhpStorm.
+ * User: juandaniel
+ * Date: 8/5/17
+ * Time: 19:53
+ */
+
+require_once('Common.php');
 class Login extends CI_Controller
 {
     public function index()
     {
-        echo "[Login]Logeado con exito";
+        if (!isset($_SESSION['pk'])) {
+            $this->load->view('vLogin');
+        } else {
+            goHome();
+            //echo "<a href='" . base_url('Login') . "'>Cerrar sesión</a>";
+        }
     }
 
-    public function doLogin()
+    function doLogin()
     {
         $email = $this->input->post("email");
         $password = $this->input->post("password");
 
-        if (isset($email) && isset($password)) {
-            $this->load->model('mUser');
-            $valido = $this->mUser->doLogin($email, $password);
-            if ($valido > 0) {
-                // TODO: Login correcto
-                $_SESSION['pk'] = $valido;
-                header('location: ' . base_url('Home'));
-            } else {
-                // TODO: Reload page
-                echo "Ese usuario no existe!";
-            }
-        } else {
-            // TODO: Throw error 404 message
+        $this->load->model('mUser');
+
+
+        if ($pk = $this->mUser->requestLogin($email, $password) > 0) {
+            $_SESSION['pk'] = $pk;
         }
+        goHome();
+
     }
 
-    public function closeSession()
+    function closeSession()
     {
+        goHome();
         session_destroy();
-        header('location: ' . base_url('Landing'));
     }
+
+
+
 }

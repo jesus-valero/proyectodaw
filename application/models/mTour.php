@@ -26,6 +26,7 @@ class mTour extends CI_Model
         $idLocation = $dbTemp->lastInsertId();
 
         if (strcmp($dtEnd, "NULL") == 0) {
+            echo "con null";
             $stmt = getdb()->prepare("INSERT INTO tours(tur_FK_usr_PK, tur_FK_loc_PK, tur_FK_cat_PK, tur_name, tur_dt_ini, tur_dt_end, tur_description ) values( :usrPk, :locPk, :catPk, :tourName, :dtIni, NULL, :description)");
         }
         else {

@@ -17,5 +17,16 @@ function isUserLogged()
 
 function goHome()
 {
-    header('location: ' . base_url('Home'));
+    header('location: ' . base_url('Tour'));
 }
+
+function getHeader()
+{
+    if (isset($_SESSION['pk'])) {
+        return 'vHeaderLogged';
+    } else {
+        return 'vHeader';
+
+    }
+}
+

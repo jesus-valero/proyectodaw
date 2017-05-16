@@ -31,7 +31,7 @@ class Register extends CI_Controller
                 case VALIDATION_STATUS::VALIDATION_USER_OK:
                     // TODO: procedemos a crear al usuario
                     $this->mUser->addNewAccount($email, $password);
-                    header('location: ' . base_url('Landing'));
+                    header('location: ' . base_url('Tour'));
 
                     break;
                 case VALIDATION_STATUS::USER_ALREADY_EXISTS:
