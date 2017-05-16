@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller
 {
-
     public function index()
     {
         echo "[Login]Logeado con exito";
@@ -20,12 +19,11 @@ class Login extends CI_Controller
             if ($valido > 0) {
                 // TODO: Login correcto
                 $_SESSION['pk'] = $valido;
-                header('location: ' . base_url('Landing'));
+                header('location: ' . base_url('Home'));
             } else {
                 // TODO: Reload page
                 echo "Ese usuario no existe!";
             }
-
         } else {
             // TODO: Throw error 404 message
         }
@@ -36,5 +34,4 @@ class Login extends CI_Controller
         session_destroy();
         header('location: ' . base_url('Landing'));
     }
-
 }

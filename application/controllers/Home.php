@@ -3,19 +3,20 @@
 /**
  * Created by PhpStorm.
  * User: juandaniel
- * Date: 8/5/17
- * Time: 19:53
+ * Date: 10/5/17
+ * Time: 19:05
  */
-class Landing extends CI_Controller
+
+require_once('Common.php');
+
+class Home extends CI_Controller
 {
     public function index()
     {
         if (!isset($_SESSION['pk'])) {
             $this->load->view('vLanding');
         } else {
-            echo "<a href='" . base_url('Landing') . "'>Cerrar sesión</a>";
+            $this->load->view('vHeader');
         }
     }
-
-
 }

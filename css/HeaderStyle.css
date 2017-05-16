@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+    background: grey;
+}
+
+header a {
+    padding: 1.5vh;
+    text-decoration: none;
+    border: 1px solid silver;
+}
