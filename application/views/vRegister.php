@@ -15,6 +15,9 @@
     <input type="password" name="repassword"/>
     <br/>
     <input type="submit" value="Registrarse">
+
+
+
 </form>
 </body>
 </html>
