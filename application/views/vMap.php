@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Pruebas con API Google</title>
+	<title>Tour map</title>
 	<style type="text/css">
-		#googleMap { width: 80%; height: 400px; text-align: center;}
-
+    body { background-color: #F5F5F5; }
+    h1 { text-align: center; }
+    #googleMap { width: 100%; height: 400px; text-align: center; }
     #legend { font-family: Arial, sans-serif; background: #fff; padding: 10px; margin: 10px; border: 3px solid #000; }
     #legend h3 { margin-top: 0; }
     #legend img { vertical-align: middle; width: 30px;}
@@ -13,11 +14,11 @@
 </style>
 </head>
 <body>
-	<h1>My First Google Map</h1>
+	<h1>Tour map</h1>
 	<div class="map_container">
-		<div id="googleMap"></div>
-    <div id="legend"><h3>Legend</h3></div>
-    <div class="search"></div>
+    <input id="pac-input" class="controls" type="text" placeholder="Buscar">
+    <div id="googleMap"></div>
+    <div id="legend"><h3>Legend</h3></div>    
   </div>
   <script>
 
@@ -63,9 +64,9 @@
           icon: '/proyectodaw/img/map/icons/'+location.type+'.png',         
         }); 
 
-        //al clicar un punto mostramos title + text
+        //al clicar un punto mostramos title + decription
         google.maps.event.addListener(marker, 'click', function(evt) {
-          infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.text+'<br><img src="/proyectodaw/img/map/icons/arts.png"></div>');
+          infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.description+'<br><img src="/proyectodaw/img/map/icons/arts.png"></div>');
           infoWindow.open(map, marker);
         })
 
