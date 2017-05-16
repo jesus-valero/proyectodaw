@@ -61,7 +61,7 @@
       var markers = locations.map(function(location, i) {
         var marker = new google.maps.Marker({
           position: location,
-          icon: '/proyectodaw/img/map/icons/'+location.type+'.png',         
+          icon: '/proyectodaw/img/map/icons/'+location.category+'.png',         
         }); 
 
         //al clicar un punto mostramos title + decription
