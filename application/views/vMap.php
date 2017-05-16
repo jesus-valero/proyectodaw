@@ -32,15 +32,15 @@
       var icons = {
         bar: {
           name: 'Bar',
-          icon: '../img/map/icons/bar.png'
+          icon: '/proyectodaw/img/map/icons/bar.png'
         },
         arts: {
           name: 'Arts',
-          icon: '../img/map/icons/arts.png'
+          icon: '/proyectodaw/img/map/icons/arts.png'
         },
         sport: {
           name: 'Sport',
-          icon: '../img/map/icons/sport.png'
+          icon: '/proyectodaw/img/map/icons/sport.png'
         }
       };
 
