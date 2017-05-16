@@ -28,6 +28,11 @@ class Tour extends CI_Controller
         $data = array('locations' => $locations);
 
         $this->load->view('vMap', $data);
+
+
+        // TODO: get all tours
+        $this->load->model('mTour');
+        $this->mTour->getTours();
     }
 
 
