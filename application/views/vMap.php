@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Pruebas con API Google</title>
+	<title>Tour map</title>
 	<style type="text/css">
-		#googleMap { width: 80%; height: 400px; text-align: center;}
-
+    body { background-color: #F5F5F5; }
+    h1 { text-align: center; }
+    #googleMap { width: 100%; height: 400px; text-align: center; }
     #legend { font-family: Arial, sans-serif; background: #fff; padding: 10px; margin: 10px; border: 3px solid #000; }
     #legend h3 { margin-top: 0; }
     #legend img { vertical-align: middle; width: 30px;}
@@ -13,11 +14,11 @@
 </style>
 </head>
 <body>
-	<h1>My First Google Map</h1>
+	<h1>Tour map</h1>
 	<div class="map_container">
-		<div id="googleMap"></div>
-    <div id="legend"><h3>Legend</h3></div>
-    <div class="search"></div>
+    <input id="pac-input" class="controls" type="text" placeholder="Buscar">
+    <div id="googleMap"></div>
+    <div id="legend"><h3>Legend</h3></div>    
   </div>
   <script>
 
@@ -25,25 +26,11 @@
 
       //array que contiene los datos que recibimos de la BBDD
       var locations = <?php echo $locations; ?>
+      //array iconos para leyenda (viene del controlador con json_encode)
+      var icons = <?php echo $categories; ?>
 
-      var pos = {lat: -36.828611, lng: 2.1178017};
-
-      //array iconos para leyenda
-      var icons = {
-        bar: {
-          name: 'Bar',
-          icon: '/proyectodaw/img/map/icons/bar.png'
-        },
-        arts: {
-          name: 'Arts',
-          icon: '/proyectodaw/img/map/icons/arts.png'
-        },
-        sport: {
-          name: 'Sport',
-          icon: '/proyectodaw/img/map/icons/sport.png'
-        }
-      };
-
+      var pos = {lat: -36.828611, lng: 2.1178017};   
+    
       var mapProp = {
         center: pos, //coordenadas decimales
         zoom:15, //valores de 1 a 23
@@ -60,12 +47,12 @@
       var markers = locations.map(function(location, i) {
         var marker = new google.maps.Marker({
           position: location,
-          icon: '/proyectodaw/img/map/icons/'+location.type+'.png',         
+          icon: location.cat_image,         
         }); 
 
-        //al clicar un punto mostramos title + text
+        //al clicar un punto mostramos title + decription
         google.maps.event.addListener(marker, 'click', function(evt) {
-          infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.text+'<br><img src="/proyectodaw/img/map/icons/arts.png"></div>');
+          infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.description+'</div>');
           infoWindow.open(map, marker);
         })
 
@@ -95,11 +82,11 @@
       //pintamos leyenda
       var legend = document.getElementById('legend');
       for (var key in icons) {
-        var type = icons[key];
-        var name = type.name;
-        var icon = type.icon;
+        var indice = icons[key];
+        var category = indice.name;
+        var icon = indice.icon;
         var div = document.createElement('div');
-        div.innerHTML = '<img src="' + icon + '"> ' + name;
+        div.innerHTML = '<img src="' + icon + '"> ' + category;
         legend.appendChild(div);
       }
 
