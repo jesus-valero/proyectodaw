@@ -9,7 +9,7 @@
     #legend { font-family: Arial, sans-serif; background: #fff; padding: 10px; margin: 10px; border: 3px solid #000; }
     #legend h3 { margin-top: 0; }
     #legend img { vertical-align: middle; width: 30px;}
-    .info { font-size: 14px; color:hotpink; }
+    .info { font-size: 14px; color:black; }
   }
 </style>
 </head>
@@ -30,12 +30,11 @@
       var icons = <?php echo $categories; ?>
 
       var pos = {lat: -36.828611, lng: 2.1178017};   
-    
+
       var mapProp = {
         center: pos, //coordenadas decimales
         zoom:15, //valores de 1 a 23
-        mapTypeId: google.maps.MapTypeId.ROADMAP, // valores ROADMAP, SATELLITE, HYBRID, TERRAIN
-        //estilos del mapa(descomentar y dar valores para modificar estilo)       
+        mapTypeId: google.maps.MapTypeId.ROADMAP, // valores ROADMAP, SATELLITE, HYBRID, TERRAIN        
       };      
 
       var map=new google.maps.Map(document.getElementById("googleMap"),mapProp); //el mapa se pintará en id googleMap
@@ -47,7 +46,10 @@
       var markers = locations.map(function(location, i) {
         var marker = new google.maps.Marker({
           position: location,
-          icon: location.cat_image,         
+          icon: {
+            url: location.cat_image,
+            /*size: new google.maps.Size(100, 100),*/
+          },                  
         }); 
 
         //al clicar un punto mostramos title + decription
