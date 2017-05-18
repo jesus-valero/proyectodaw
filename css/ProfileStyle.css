@@ -1,0 +1,76 @@
+#profileContent {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: silver;
+    height: 90vh;
+}
+
+aside {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    width: 20vw;
+    background: #333333;
+    margin-top: 2vh;
+    align-items: center;
+}
+
+aside img {
+    border: 2vh solid grey;
+    background: silver;
+    border-radius: 50%;
+    height: 20vh;
+    margin-top: 2vh;
+    margin-bottom: 3vh;
+}
+
+aside a {
+    width: 100%;
+    background: silver;
+    font-size: 2vh;
+    text-align: center;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    text-decoration: none;
+    color: #333333;
+}
+
+aside > a:hover {
+    background: tomato;
+}
+
+h1 {
+    margin: 0;
+}
+
+aside :nth-child(5),aside :nth-child(6) {
+    margin-top: .5vh;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2vh;
+    width: 50vw;
+    height: 85vh;
+    background: gray;
+    margin-left: 2vh;
+    overflow-y: scroll;
+}
+
+.itemTrour {
+    background: silver;
+    border-radius: 2vh;
+    padding: 3vh;
+    width: 80%;
+    border: 3px solid black;
+    margin-top: 2vh;
+}
+
+.itemTrour > * {
+    text-decoration: none;
+    color: #333333;
+}
+
