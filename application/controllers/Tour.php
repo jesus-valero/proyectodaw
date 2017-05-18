@@ -34,7 +34,12 @@ class Tour extends CI_Controller
 
             $this->load->view('vMap', $data);
 
-        }
+        // TODO: get all tours
+        $this->load->model('mTour');
+        $this->mTour->getTours();
+        $this->load->view('vFooter');
+
+    }
 
 
         public function create()
@@ -59,7 +64,19 @@ class Tour extends CI_Controller
             $category = $this->input->post("category");
             $address = $this->input->post("address");
 
-            $this->load->model('mTour');
-            $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address);
-        }
+    public function addNewLocalTour()
+    {
+        $tourName = $this->input->post("name");
+        $tourDescription = $this->input->post("description");
+        $dtIni = $this->input->post("sin-limite-ini");
+        $dtEnd = $this->input->post("sin-limite-end");
+        $lat = $this->input->post("lat");
+        $lng = $this->input->post("lng");
+        $category = $this->input->post("category");
+        $address = $this->input->post("address");
+
+        $this->load->model('mTour');
+        $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address);
+
+        goHome();
     }

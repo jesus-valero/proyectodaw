@@ -27,8 +27,7 @@ class Login extends CI_Controller
 
         $this->load->model('mUser');
 
-
-        if ($pk = $this->mUser->requestLogin($email, $password) > 0) {
+        if (($pk = $this->mUser->requestLogin($email, $password)) > 0) {
             $_SESSION['pk'] = $pk;
         }
         goHome();
