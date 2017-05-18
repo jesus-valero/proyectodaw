@@ -28,6 +28,8 @@
       var locations = <?php echo $locations; ?>
       //array iconos para leyenda (viene del controlador con json_encode)
       var icons = <?php echo $categories; ?>
+      //loged true o false
+      var loged = <?php echo $loged; ?>
 
       var pos = {lat: -36.828611, lng: 2.1178017};   
 
@@ -54,7 +56,11 @@
 
         //al clicar un punto mostramos title + decription
         google.maps.event.addListener(marker, 'click', function(evt) {
-          infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.description+'</div>');
+          if(loged){
+            infoWindow.setContent('<div class="info"><a href="<?php echo base_url('Tour/tourPreview/');?>?id='+location.id+'">'+location.title+'</a><br>'+location.description+'</div>');
+          }else{
+            infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.description+'</div>');
+          }
           infoWindow.open(map, marker);
         })
 
