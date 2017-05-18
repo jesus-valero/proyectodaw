@@ -58,13 +58,14 @@ class mTour extends CI_Model
 
         // Get tours
 
-        foreach (getdb()->query("SELECT t.tur_PK as tur_PK, l.loc_lat as loc_lat, l.loc_lng as loc_lng, ca.cat_name as cat_name, t.tur_name as tur_name, t.tur_description as tur_description, t.tur_dt_ini as tur_dt_ini, t.tur_dt_end as tur_dt_end FROM tours t join location l on (t.tur_FK_loc_PK = l.loc_PK) join categories ca on (t.tur_FK_cat_PK = ca.cat_PK)") as $tour) {
+        foreach (getdb()->query("SELECT t.tur_PK as tur_PK, l.loc_lat as loc_lat, l.loc_lng as loc_lng, ca.cat_name as cat_name, t.tur_name as tur_name, t.tur_description as tur_description, ca.cat_image as cat_image, t.tur_dt_ini as tur_dt_ini, t.tur_dt_end as tur_dt_end FROM tours t join location l on (t.tur_FK_loc_PK = l.loc_PK) join categories ca on (t.tur_FK_cat_PK = ca.cat_PK)") as $tour) {
             $tours[] = array("id"=> $tour['tur_PK'],
-                            "lat"=> $tour["loc_lat"],
-                            "lng"=> $tour["loc_lng"],
+                            "lat"=> floatval($tour["loc_lat"]),
+                            "lng"=> floatval($tour["loc_lng"]),
                             "category"=> $tour["cat_name"],
                             "title"=> $tour["tur_name"],
                             "description"=> $tour["tur_description"],
+                            "cat_image"=> $tour["cat_image"],                            
                             "date_start"=> $tour["tur_dt_ini"],
                             "date_end"=> $tour["tur_dt_end"]);
 
