@@ -15,6 +15,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-ui-1.9.2.custom.min.js"></script>
     <!--    Web JS/CSS-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/HeaderStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/FooterStyle.css"/>
 
 </head>
 

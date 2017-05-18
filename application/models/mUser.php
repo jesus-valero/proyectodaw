@@ -11,6 +11,7 @@ include_once('dbConnect.php');
 
 class mUser extends CI_Model
 {
+    
     public function validateRegister($email, $password, $repassword)
     {
 
@@ -62,6 +63,29 @@ class mUser extends CI_Model
         } else {
             return -1;
         }
+    }
 
+    public function getMyTours($pk)
+    {
+        $tours = [];
+
+        $stmt = getdb()->prepare("SELECT * FROM tours where tur_FK_usr_PK = :pk");
+        $stmt->bindValue(":pk", $pk);
+
+        if ($stmt->execute()) {
+            foreach ($stmt->fetchAll() as $row) {
+                $tours[] = $row;
+            }
+        }
+
+        return $tours;
+    }
+
+    // Persona que lo ha USER, el LOCATION y la fecha de inscripcion(usr_tours)
+    public function getToursJoined()
+    {
+        foreach (getdb()->query("SELECT * FROM users_tours where ust_FK_usr_PK = " . $_SESSION['pk']) as $item) {
+            //echo "sape";
+        }
     }
 }

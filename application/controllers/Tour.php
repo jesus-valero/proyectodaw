@@ -33,6 +33,8 @@ class Tour extends CI_Controller
         // TODO: get all tours
         $this->load->model('mTour');
         $this->mTour->getTours();
+        $this->load->view('vFooter');
+
     }
 
 
@@ -60,5 +62,7 @@ class Tour extends CI_Controller
 
         $this->load->model('mTour');
         $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address);
+
+        goHome();
     }
 }
