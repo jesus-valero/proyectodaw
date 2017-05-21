@@ -31,7 +31,7 @@ class Tour extends CI_Controller {
         // TODO: get all tours
         $this->load->model('mTour');
         $this->mTour->getTours();
-        $this->load->view('vFooter');
+        /*$this->load->view('vFooter');*/
 
     }
 
