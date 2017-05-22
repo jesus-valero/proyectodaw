@@ -55,7 +55,6 @@ class mTour extends CI_Model
         $result['category'] = $categoyInfo;
 
         // Get tours
-
         foreach (getdb()->query("SELECT t.tur_PK as tur_PK, l.loc_lat as loc_lat, l.loc_lng as loc_lng, ca.cat_name as cat_name, t.tur_name as tur_name, t.tur_description as tur_description, ca.cat_image as cat_image, t.tur_dt_ini as tur_dt_ini, t.tur_dt_end as tur_dt_end FROM tours t join location l on (t.tur_FK_loc_PK = l.loc_PK) join categories ca on (t.tur_FK_cat_PK = ca.cat_PK)") as $tour) {
 
             $dtIni = strtotime($tour['tur_dt_ini']);
@@ -72,8 +71,9 @@ class mTour extends CI_Model
                 "active" => time() > $dtIni ? true : false);
 
             $result['tours'] = $tours;
+        }  
 
-            return $result;
-        }        
+        return $result;
+
     }
 }

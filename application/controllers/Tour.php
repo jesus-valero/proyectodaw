@@ -20,9 +20,11 @@ class Tour extends CI_Controller {
 
         $locations = $this->mTour->getTours()['tours'];
         $categories = $this->mTour->getTours()['category'];
+        isset($_SESSION['pk']) ? $loged = true : $loged = false;        
 
         $data['locations'] = json_encode($locations);                                
-        $data['categories'] = json_encode($categories);
+        $data['categories'] = json_encode($categories);        
+        $data['loged'] = json_encode($loged);     
 
         $this->load->view('vMap', $data);
 
@@ -43,9 +45,6 @@ class Tour extends CI_Controller {
 
     }
 
-
-
-
     public function addNewLocalTour() {
         $tourName = $this->input->post("name");
         $tourDescription = $this->input->post("description");
@@ -61,5 +60,12 @@ class Tour extends CI_Controller {
         $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address, $locCity);
 
         goHome();
+    }
+
+    public function tourPreview() {
+                echo '<pre>';
+                print_r($_REQUEST);
+                die;
+
     }
 }
