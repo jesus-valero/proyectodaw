@@ -55,9 +55,10 @@ class Tour extends CI_Controller {
         $lng = $this->input->post("lng");
         $category = $this->input->post("category");
         $address = $this->input->post("address");
+        $locCity = $this->input->post("loccity");
 
         $this->load->model('mTour');
-        $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address);
+        $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address, $locCity);
 
         goHome();
     }
