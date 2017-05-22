@@ -16,7 +16,7 @@ class Profile extends CI_Controller
         goHome();
     }
 
-    function travels()
+    function tours()
     {
 
         $this->load->view(getHeader());
@@ -28,7 +28,7 @@ class Profile extends CI_Controller
         $this->load->view('vFooter');
     }
 
-    function tours()
+    function travels()
     {
         $this->load->view(getHeader());
         $this->load->model('mUser');
