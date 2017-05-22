@@ -20,11 +20,6 @@ function goHome()
     header('location: ' . base_url('Tour'));
 }
 
-function getUrl($controller)
-{
-    echo base_url() . "/" . $controller;
-}
-
 function getHeader()
 {
     if (isset($_SESSION['pk'])) {

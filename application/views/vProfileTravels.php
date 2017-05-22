@@ -15,8 +15,8 @@
         <img src="www.lorempixel.com/200/200">
         <h1>Juan Daniel Quispe</h1>
         <p id="address">Addesss</p>
-        <a href="<? getUrl("Profile/travels") ?>">Mis viajes</a>
-        <a href="<? getUrl("Profile/tours") ?>">Mis tours</a>
+        <a href="<?php echo base_url()."Profile/travels" ?>">Mis viajes</a>
+        <a href="<?php echo base_url()."Profile/tours" ?>">Mis tours</a>
         <a href="">Editar</a>
     </aside>
     <section>
