@@ -10,27 +10,7 @@
     #legend img { vertical-align: middle; width: 30px;}
     .info { font-size: 14px; color:black; }
 
-    .buscador {
-      text-align:center;
-      padding:30px 0px;
-    }
 
-    .buscador #direccion {
-      margin:10px auto;
-      width:100%;
-      padding:7px;
-      max-width:250px;
-    }
-
-    .buscador #buscar {
-      margin:0 auto;
-      max-width:250px;
-      padding:7px;
-      color:#FFFFFF;
-      background:#f2777a;
-      border:2px solid #f2777a;
-      cursor:pointer;
-    }
 
   }
 </style>
@@ -38,13 +18,9 @@
 <body>
 	<!-- <h1>Tour map</h1> -->
 	<div class="map_container">
-    <!-- <div class="buscador">
-      <h2>Ingrese una dirección</h2>
-      <input type="text" id="direccion">
-      <div id="buscar">Buscar</div>
-    </div> -->
-    <div id="googleMap"></div>
-    <div id="legend"></div>    
+      <input id="pac-input" class="controls" type="text" placeholder="Buscar">  
+      <div id="googleMap"></div>
+      <div id="legend"></div>      
   </div>
   <script>
 
@@ -58,7 +34,38 @@
       var loged = <?php echo $loged; ?>
 
       /*...........ini...............*/
-     /* var geocoder = new google.maps.Geocoder();*/
+      // Create the search box and link it to the UI element.
+      /*var input = document.getElementById('pac-input');
+     var searchBox = new google.maps.places.SearchBox(input);*/
+
+      // Bias the SearchBox results towards current map's viewport.
+     /* map.addListener('bounds_changed', function () {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      var placeName = "";
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+        "latLng": event.latLng
+      }, function (results, status) {
+        console.log(results, status);
+        if (status == google.maps.GeocoderStatus.OK) {
+          console.log(results);
+          var lat = results[0].geometry.location.lat(),
+          lng = results[0].geometry.location.lng(),
+          latlng = new google.maps.LatLng(lat, lng);
+
+          placeName = results[0].formatted_address;
+
+          $("#address").attr("value", placeName);
+
+        }
+      });
+
+      $("input[name='lat']").attr("value", event.latLng.lat());
+      $("input[name='lng']").attr("value", event.latLng.lng());
+      checkValidation();*/
+
       /*..........fin............*/
 
       var pos = {lat: -36.828611, lng: 2.1178017};   
@@ -76,28 +83,55 @@
 
       /*.......ini.......*/
 
-      /*geocoder.geocode({'address': direccion}, function(results, status) {
-        if (status === 'OK') {
-          var resultados = results[0].geometry.location,
-          resultados_lat = resultados.lat(),
-          resultados_long = resultados.lng();
+     /* searchBox.addListener('places_changed', function () {
+        var places = searchBox.getPlaces();
 
-         var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-        });
-
-        } else {
-          var mensajeError = "";
-          if (status === "ZERO_RESULTS") {
-            mensajeError = "No hubo resultados para la dirección ingresada.";
-          } else if (status === "OVER_QUERY_LIMIT" || status === "REQUEST_DENIED" || status === "UNKNOWN_ERROR") {
-            mensajeError = "Error general del mapa.";
-          } else if (status === "INVALID_REQUEST") {
-            mensajeError = "Error de la web. Contacte con Name Agency.";
-          }
-          alert(mensajeError);
+        if (places.length == 0) {
+          return;
         }
+
+        // Clear out the old markers.
+        markers.forEach(function (marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        $("input[name='lat']").attr("value", places[0].geometry.location.lat());
+        $("input[name='lng']").attr("value", places[0].geometry.location.lng());
+        checkValidation();
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function (place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+              } else {
+                bounds.extend(place.geometry.location);
+              }
+            });
+        map.fitBounds(bounds);
       });*/
 
       /*.......fin.......*/
@@ -125,7 +159,7 @@
         //al clicar un punto mostramos title + decription
         google.maps.event.addListener(marker, 'click', function(evt) {
           if(loged){
-            infoWindow.setContent('<div class="info"><a href="<?php echo base_url('Tour/tourPreview/');?>?id='+location.id+'">'+location.title+'</a><br>'+location.description+'</div>');
+            infoWindow.setContent('<div class="info"><a href="<?php echo base_url('Tour/tourPreview/');?>'+location.id+'">'+location.title+'</a><br>'+location.description+'</div>');
           }else{
             infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.description+'</div>');
           }
@@ -173,12 +207,30 @@
 
     /*........INI.............*/
 
-    /*$("#buscar").click(function() {
-            var direccion = $("#direccion").val();
-      if (direccion !== "") {
-        myMap("mapa-geocoder", direccion);
+    /*function clearMarkers() {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
       }
-        });*/
+    }
+
+    function checkValidation() {
+
+      if ($("#lat").attr("value") === "0") {
+        return;
+      }
+
+      if ($("#lng").attr("value") === "0") {
+        return;
+      }
+
+      if ($("#category").attr("value") === "0") {
+        return;
+      }
+
+      if ($("input[name='name']").val().trim().length > 0 && $("textarea[name='description']").val().trim().length > 0) {
+        $(".crearTour").removeAttr('disabled');
+      }
+    }*/
 
     /*.............FIN...............*/
 
@@ -187,6 +239,6 @@
   <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
   </script>
   <!-- cargamos .js de la api, le pasamos nuestra key y ejecutamos función que pintará nuestro mapa -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf3HlMS638SZdNMtrHTXzd1vUnq9XnKXQ&callback=myMap"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf3HlMS638SZdNMtrHTXzd1vUnq9XnKXQ&libraries=places&callback=myMap"></script>
 </body>
 </html>
