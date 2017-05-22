@@ -13,11 +13,7 @@ class Profile extends CI_Controller
 {
     function index()
     {
-        $this->load->view(getHeader());
-        $this->load->model('mUser');
-        $this->load->view('vProfile');
-        $this->load->view('vFooter');
-
+        goHome();
     }
 
     function travels()
@@ -25,22 +21,19 @@ class Profile extends CI_Controller
 
         $this->load->view(getHeader());
         $this->load->model('mUser');
-        //$this->load->view('vProfile');
         $tours['data'] = $this->mUser->getMyTours($_SESSION['pk']);
 
-        //echo $tours;
-        //$this->load->view('vProfileMyTours');
-
-        //$data['tours'] = $tours;
-
-        $this->parser->parse('vProfile', $tours);
+        $this->parser->parse('vProfileTravels', $tours);
 
         $this->load->view('vFooter');
     }
 
     function tours()
     {
+        $this->load->view(getHeader());
         $this->load->model('mUser');
-        echo $this->mUser->getToursJoined();
+        $tours['data'] = $this->mUser->getToursJoined();
+        $this->parser->parse('vProfileTours', $tours);
+        $this->load->view('vFooter');
     }
 }

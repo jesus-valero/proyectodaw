@@ -8,7 +8,7 @@
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/ProfileStyle.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/ProfileTravelsStyle.css"/>
 
 <div id="profileContent">
     <aside>

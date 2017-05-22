@@ -12,13 +12,14 @@ require_once('dbConnect.php');
 class mTour extends CI_Model
 {
     // Insert a tabla: tour, loc,
-    public function addNewLocalTour($pk, $name, $description, $dtIni, $dtEnd, $catPk, $lat, $lng, $address)
+    public function addNewLocalTour($pk, $name, $description, $dtIni, $dtEnd, $catPk, $lat, $lng, $address, $locCity)
     {
         $dbTemp = getdb();
-        $stmt = $dbTemp->prepare("INSERT INTO location(loc_lat, loc_lng, loc_place) values( :lat, :lng, :address)");
+        $stmt = $dbTemp->prepare("INSERT INTO location(loc_lat, loc_lng, loc_place, loc_city) values( :lat, :lng, :address, :loc_city)");
         $stmt->bindValue("lat", $lat);
         $stmt->bindValue("lng", $lng);
         $stmt->bindValue("address", $address);
+        $stmt->bindValue(":loc_city", $locCity);
 
         $stmt->execute();
 

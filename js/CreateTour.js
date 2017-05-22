@@ -155,14 +155,37 @@ $(document).ready(function () {
         geocoder.geocode({
             "latLng": event.latLng
         }, function (results, status) {
-            console.log(results, status);
+            //console.log(results, status);
             if (status == google.maps.GeocoderStatus.OK) {
-                console.log(results);
                 var lat = results[0].geometry.location.lat(),
                     lng = results[0].geometry.location.lng(),
                     latlng = new google.maps.LatLng(lat, lng);
 
                 placeName = results[0].formatted_address;
+
+                // Get city: http://stackoverflow.com/a/6798005
+                var city = "";
+                //find country name
+                for (var i = 0; i < results[0].address_components.length; i++) {
+                    for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+
+                        //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                        if (results[0].address_components[i].types[b] === "administrative_area_level_1") {
+                            //this is the object you are looking for
+                            city = results[0].address_components[i];
+                            break;
+                        }
+                    }
+
+                }
+
+                //
+                var cityCountry = "";
+                $.get("http://ws.geonames.org/countryCodeJSON?lat="+lat+"&lng="+lng+"&username=demo", function(response) {
+                    cityCountry = city.long_name + ", " + response.countryName;
+                    $("#loccity").attr("value", cityCountry);
+                });
+                //
 
                 $("#address").attr("value", placeName);
 

@@ -76,6 +76,7 @@
 
 
             <input type="text" value="0" name="category" id="category" hidden>
+            <input type="text" value="0" name="loccity" id="loccity" hidden>
             <input type="submit" value="Crear tour!" class="crearTour">
 
         </form>
