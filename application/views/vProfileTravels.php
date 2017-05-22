@@ -21,7 +21,7 @@
     </aside>
     <section>
         {data}
-        <a class="itemTrour" href="#">
+        <a class="itemTrour" href="<?php echo base_url(). "/Profile/travelsInfo" ?>/{tur_PK}">
             <h1>{tur_name}</h1>
             <p>{tur_description}</p>
             <p>{tur_dt_ini}</p>
