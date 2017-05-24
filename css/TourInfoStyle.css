@@ -1,0 +1,98 @@
+section {
+    height: 90vh;
+    width: 100vw;
+    background: linear-gradient(silver,black);
+}
+
+section > img {
+    position: absolute;
+    width: 100vw !important;
+    height: 90vh !important;
+    filter: blur(13px)
+}
+
+#content {
+    position: absolute;
+    width: 100vw !important;
+    height: 90vh !important;
+    background: rgba(0,0,0,.6);
+    z-index:3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#card {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: ivory;
+    width: 35vw;
+    height: 70vh;
+    box-shadow: 8px 8px 20px silver;
+}
+
+#card h1 {
+    text-align: center;
+    font-size: 4vh;
+}
+
+#address {
+    text-align: center;
+    padding: 2vh;
+    color: brown;
+    justify-content: center;
+    margin-top: -5vh;
+    letter-spacing: 2px;
+
+}
+
+#description {
+    padding: 5vh;
+    margin: 0;
+    white-space: pre-wrap;
+    font-size: 2vh;
+    text-align: center;
+    margin-top: -5vh;
+    letter-spacing: 2px;
+
+}
+
+#fecha {
+    letter-spacing: 2px;
+
+    padding: 1vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+#join {
+    background: blue;
+    color: white;
+    text-decoration: none;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    align-self: center;
+    border-radius: 1.5vh;
+    transition: all .5s;
+}
+
+#join:hover, #leave:hover {
+    transform: scale(1.1);
+}
+
+#leave {
+    background: red;
+    color: white;
+    text-decoration: none;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    align-self: center;
+    border-radius: 1.5vh;
+    transition: all .5s;
+}
