@@ -102,7 +102,7 @@
 			<div class="data active_date">{dt_end}</div><br>
 			<div class="label">Nueva fecha y hora de finalización:</div>
 			<input class="data active_date" type="datetime-local" name="dt_end" value="{dt_end}"><br>
-			<input type="hidden" name="pk" value="pk">
+			<input type="hidden" name="pk" value="{pk}">
 			<input class="data" type="submit" name="">
 		</form>
 		

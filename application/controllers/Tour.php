@@ -97,15 +97,6 @@ class Tour extends CI_Controller {
         $this->load->model('mTour');
         $test = $this->mTour->updateTour($new_values);
        
-        if($test){
-                    echo '<pre>';
-                    print_r('ok');
-                    die;
-        }else{
-                    echo '<pre>';
-                    print_r('ko');
-                    die;
-        }
-        /*$this->tourEdit($new_values['pk']);*/
+        $this->tourEdit($new_values['pk']);
     }
 }

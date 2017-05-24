@@ -89,50 +89,30 @@ class mTour extends CI_Model
 
     //update tour on edit
     public function updateTour($new_values){
-              
-        $pdo = getdb();
-
-        /*$query = "UPDATE tours SET tur_name = :tur_name, tur_description = :tur_description";       
-        if(isset($new_values['dt_ini']) && !empty($new_values['dt_ini'])){
-            $query.", dt_ini = :dt_ini";           
-        } 
-        if(isset($new_values['dt_end']) && !empty($new_values['dt_end'])){
-            $query.", dt_end = :dt_end";           
-        }        
-        $query = $query." WHERE pk = :pk";
-        $stmt = $pdo->prepare($query);
-
-        $stmt->bindParam(':tur_name', $new_values['tur_name'], PDO::PARAM_STR);       
-        $stmt->bindParam(':tur_description', $new_values['tur_description'], PDO::PARAM_STR); 
-        if(isset($new_values['dt_ini']) && !empty($new_values['dt_ini'])){
-            $stmt->bindParam(':dt_ini', $new_values['dt_ini'], PDO::PARAM_STR);       
-        } 
-        if(isset($new_values['dt_end']) && !empty($new_values['dt_end'])){
-            $stmt->bindParam(':dt_end', $new_values['dt_end'], PDO::PARAM_STR);       
-        }  
-        $stmt->bindParam(':pk', $new_values['pk'], PDO::PARAM_STR); 
-        
-        $stmt->execute();  */     
-
+    
         $values = array();
         $query = "UPDATE tours SET tur_name=?, tur_description=?";
         $values[] = $new_values['tur_name'];
         $values[] = $new_values['tur_description'];
         if(isset($new_values['dt_ini']) && !empty($new_values['dt_ini'])){
-            $query.", dt_ini=?";
-            $values[] = $new_values['dt_ini'];
+            $query = $query.', tur_dt_ini=?';
+            $new_values['dt_ini'] = explode('T',$new_values['dt_ini']);
+            $new_values['dt_ini'] = implode(' ',$new_values['dt_ini']).':00';
+            $values[] = strval($new_values['dt_ini']);
         } 
         if(isset($new_values['dt_end']) && !empty($new_values['dt_end'])){
-            $query.", dt_end=?";
-            $values[] = $new_values['dt_end'];
+            $query = $query.', tur_dt_end=?';
+            $new_values['dt_end'] = explode('T',$new_values['dt_end']);
+            $new_values['dt_end'] = implode(' ',$new_values['dt_end']).':00';
+            $values[] = strval($new_values['dt_end']);
         }        
-        $query = $query." WHERE pk=?";
+        $query = $query." WHERE tur_PK=?";
         $values[] = $new_values['pk'];
-        
-        $stmt = $pdo->prepare($query);
+                     
+        $stmt = getdb()->prepare($query);
         $stmt->execute($values);
         $affected_rows = $stmt->rowCount();
-       
+
     }
 
 }
