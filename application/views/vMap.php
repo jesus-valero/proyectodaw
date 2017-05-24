@@ -5,7 +5,7 @@
 	<style type="text/css">
     body { background-color: #F5F5F5; }
     /* h1 { text-align: center; }*/
-    #googleMap { width: 100%; height: 500px; text-align: center; }
+    #googleMap { width: 100%; height: 90vh; text-align: center; }
     #legend { font-family: Arial, sans-serif; background: #fff; padding: 5px; /*border: 3px solid #000;*/ text-align: left;}    
     #legend img { vertical-align: middle; width: 30px;}
     .info { font-size: 14px; color:black; }
@@ -68,7 +68,7 @@
 
       /*..........fin............*/
 
-      var pos = {lat: -36.828611, lng: 2.1178017};   
+      var pos = {lat: 41.5667, lng: 2.0167};
 
       var mapProp = {
         center: pos, //coordenadas decimales
@@ -159,7 +159,7 @@
         //al clicar un punto mostramos title + decription
         google.maps.event.addListener(marker, 'click', function(evt) {
           if(loged){
-            infoWindow.setContent('<div class="info"><a href="<?php echo base_url('Tour/tourPreview/');?>'+location.id+'">'+location.title+'</a><br>'+location.description+'</div>');
+            infoWindow.setContent('<div class="info"><a href="<?php echo base_url('Tour/tourInfo/');?>'+location.id+'">'+location.title+'</a><br>'+location.description+'</div>');
           }else{
             infoWindow.setContent('<div class="info">'+location.title+'<br>'+location.description+'</div>');
           }

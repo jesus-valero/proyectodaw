@@ -102,4 +102,69 @@ class mUser extends CI_Model
 
         return $result;
     }
+
+    public function getTourInfo($idTour)
+    {
+
+        $query = getdb()->prepare("SELECT u.usr_name AS username, u.usr_PK as userPK, l.loc_city AS city, t.tur_name as tur_name, t.tur_description as tur_description, t.tur_PK as pk, t.tur_dt_ini as dt_ini, t.tur_dt_end as dt_end, l.loc_lat, l.loc_lng as loc_lng, l.loc_place FROM users u JOIN tours t ON (u.usr_PK = t.tur_FK_usr_PK) JOIN location l ON (t.tur_FK_loc_PK = l.loc_PK ) WHERE t.tur_PK = ?");
+        $query->execute(array($idTour));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        // GOOGLE IMAGE
+        //$result[0] = $result[0] + array('background'=> 'https://maps.googleapis.com/maps/api/staticmap?center='.$result[0]['loc_lat'].','.$result[0]['loc_lng'].'&zoom=13&size=10000x900&maptype=terrain&key=AIzaSyBpBLlnU2tupzhrdh4uXNmHeZhSSkHk4k8');
+        // GOOGLE STREET VIEW
+        $result[0] = $result[0] + array('background' => 'https://maps.googleapis.com/maps/api/streetview?size=1200x1200&location=' . $result[0]['loc_lat'] . ',' . $result[0]['loc_lng'] . '&fov=90&heading=265&pitch=10&key=AIzaSyBpBLlnU2tupzhrdh4uXNmHeZhSSkHk4k8');
+
+        // Contamos la gente que se ha unido
+        $stmt = getdb()->prepare("SELECT count(*) as ene FROM users_tours where ust_FK_tur_PK = :turPK");
+        $stmt->bindValue(':turPK', $idTour);
+        $stmt->execute();
+        $max = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (intval($max[0]['ene']) == 0) {
+            $result[0] = $result[0] + array('people' => "Aun no se ha unido gente");
+        } else {
+            $result[0] = $result[0] + array('people' => "Se han apuntado " . ($max[0]['ene']) . " persona(s)");
+        }
+
+        $result[0]['dt_ini'] = "Hace " . $this->getDaysRange(substr($result[0]['dt_ini'], 0, 10)) . " dias";
+
+        if (strcmp($result[0]['dt_end'], "0000-00-00 00:00:00") == 0) {
+            $result[0]['dt_end'] = "Sin fecha limite";
+        } else {
+            $result[0]['dt_end'] = "Acaba en " . ($this->getDaysRange(substr($result[0]['dt_end'], 0, 10), true) + 1) . " dias";
+        }
+
+        return $result;
+    }
+
+    public function joinUserToTour($pkTour, $pkUser)
+    {
+
+        $stmt = getdb()->prepare("INSERT INTO users_tours(ust_FK_usr_PK, ust_FK_tur_PK) values (:pkUser, :pkTour)");
+        $stmt->bindValue(':pkUser', $pkUser);
+        $stmt->bindValue(':pkTour', $pkTour);
+        $stmt->execute();
+
+    }
+
+    public function removeUserTour($pkTour, $pkUser)
+    {
+        $stmt = getdb()->prepare("DELETE FROM users_tours WHERE ust_FK_usr_PK = :pkUser AND ust_FK_tur_PK = :pkTour");
+        $stmt->bindValue(':pkUser', $pkUser);
+        $stmt->bindValue(':pkTour', $pkTour);
+        $stmt->execute();
+    }
+
+    public function getDaysRange($date, $end = false)
+    {
+        $now = time();
+        $your_date = strtotime($date);
+
+        $end ? $datediff = $your_date - $now : $datediff = $now - $your_date;
+
+        return floor($datediff / (60 * 60 * 24));
+    }
+
+
 }

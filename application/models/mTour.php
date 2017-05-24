@@ -26,7 +26,7 @@ class mTour extends CI_Model
         $idLocation = $dbTemp->lastInsertId();
 
         if (strcmp($dtEnd, "NULL") == 0) {
-            $stmt = getdb()->prepare("INSERT INTO tours(tur_FK_usr_PK, tur_FK_loc_PK, tur_FK_cat_PK, tur_name, tur_dt_ini, tur_dt_end, tur_description ) values( :usrPk, :locPk, :catPk, :tourName, :dtIni, NULL, :description)");
+            $stmt = getdb()->prepare("INSERT INTO tours(tur_FK_usr_PK, tur_FK_loc_PK, tur_FK_cat_PK, tur_name, tur_dt_ini, tur_description ) values( :usrPk, :locPk, :catPk, :tourName, :dtIni, :description)");
         } else {
             $stmt = getdb()->prepare("INSERT INTO tours(tur_FK_usr_PK, tur_FK_loc_PK, tur_FK_cat_PK, tur_name, tur_dt_ini, tur_dt_end, tur_description ) values( :usrPk, :locPk, :catPk, :tourName, :dtIni, :dtEnd, :description)");
             $stmt->bindValue(":dtEnd", $dtEnd);
@@ -55,7 +55,7 @@ class mTour extends CI_Model
         $result['category'] = $categoyInfo;
 
         // Get tours
-        foreach (getdb()->query("SELECT t.tur_PK as tur_PK, l.loc_lat as loc_lat, l.loc_lng as loc_lng, ca.cat_name as cat_name, t.tur_name as tur_name, t.tur_description as tur_description, ca.cat_image as cat_image, ca.cat_image_off as cat_image_off, t.tur_dt_ini as tur_dt_ini, t.tur_dt_end as tur_dt_end FROM tours t join location l on (t.tur_FK_loc_PK = l.loc_PK) join categories ca on (t.tur_FK_cat_PK = ca.cat_PK)") as $tour) {
+        foreach (getdb()->query("SELECT t.tur_PK as tur_PK, l.loc_lat as loc_lat, l.loc_lng as loc_lng, ca.cat_name as cat_name, t.tur_name as tur_name, t.tur_description as tur_description, ca.cat_image as cat_image, ca.cat_image_off as cat_image_off, t.tur_dt_ini as tur_dt_ini, t.tur_dt_end as tur_dt_end FROM tours t join location l on (l.loc_PK = t.tur_FK_loc_PK and DATEDIFF(tur_dt_end,NOW()) >0) join categories ca on (t.tur_FK_cat_PK = ca.cat_PK)") as $tour) {
 
             $dtIni = strtotime($tour['tur_dt_ini']);
 
