@@ -67,19 +67,20 @@ class Tour extends CI_Controller
     }
 
     public function tourPreview($id) {
+        if (isUserLogged()) {
+            $this->load->view(getHeader());
+            $this->load->model('mTour');
+            $tour_data = $this->mTour->getTourById($id)[0];
+            $this->parser->parse('vTourPreview', $tour_data);
+        } else {
+            $this->load->view(getHeader());
+        }
+    }
     public function tourInfo()
     {
         $link = $_SERVER['PHP_SELF'];
         $link_array = explode('/',$link);
 
-        if (isUserLogged()) {       
-            $this->load->view(getHeader());              
-            $this->load->model('mTour');
-            $tour_data = $this->mTour->getTourById($id)[0];             
-            $this->parser->parse('vTourPreview', $tour_data);
-        } else {
-            $this->load->view(getHeader());
-        }
         if (isUserLogged()) {
             $this->load->view(getHeader());
 
@@ -87,7 +88,6 @@ class Tour extends CI_Controller
             $data = $this->mUser->getTourInfo(end($link_array));
 
             $this->parser->parse('vTourInfo', $data[0]);
-
 
         } else {
             $this->load->view(getHeader());
