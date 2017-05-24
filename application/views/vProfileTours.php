@@ -21,7 +21,7 @@
     </aside>
     <section>
         {data}
-        <a class="itemTour" href="<?php echo base_url(). "/Profile/travelsInfo" ?>/{pk}">
+        <a class="itemTour" href="<?php echo base_url(). "Tour/tourPreview" ?>/{pk}">
             <div class="imgTour"></div>
             <h1>{city}</h1>
             <p>{tur_name}</p>

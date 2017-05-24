@@ -77,4 +77,42 @@ class mTour extends CI_Model
         return $result;
 
     }
+
+    //get tour data by id
+    function getTourById($id){   
+        $query = getdb()->prepare("SELECT u.usr_name AS username, l.loc_city AS city, t.tur_name as tur_name, t.tur_description as tur_description, t.tur_PK as pk, t.tur_dt_ini as dt_ini, t.tur_dt_end as dt_end, l.loc_lat, l.loc_place, l.loc_city FROM users u JOIN tours t ON (u.usr_PK = t.tur_FK_usr_PK) JOIN location l ON (t.tur_FK_loc_PK = l.loc_PK ) WHERE t.tur_PK = ?");
+        $query->execute(array($id));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);            
+
+        return $result;
+    }
+
+    //update tour on edit
+    public function updateTour($new_values){
+    
+        $values = array();
+        $query = "UPDATE tours SET tur_name=?, tur_description=?";
+        $values[] = $new_values['tur_name'];
+        $values[] = $new_values['tur_description'];
+        if(isset($new_values['dt_ini']) && !empty($new_values['dt_ini'])){
+            $query = $query.', tur_dt_ini=?';
+            $new_values['dt_ini'] = explode('T',$new_values['dt_ini']);
+            $new_values['dt_ini'] = implode(' ',$new_values['dt_ini']).':00';
+            $values[] = strval($new_values['dt_ini']);
+        } 
+        if(isset($new_values['dt_end']) && !empty($new_values['dt_end'])){
+            $query = $query.', tur_dt_end=?';
+            $new_values['dt_end'] = explode('T',$new_values['dt_end']);
+            $new_values['dt_end'] = implode(' ',$new_values['dt_end']).':00';
+            $values[] = strval($new_values['dt_end']);
+        }        
+        $query = $query." WHERE tur_PK=?";
+        $values[] = $new_values['pk'];
+                     
+        $stmt = getdb()->prepare($query);
+        $stmt->execute($values);
+        $affected_rows = $stmt->rowCount();
+
+    }
+
 }

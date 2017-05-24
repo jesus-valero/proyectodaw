@@ -66,6 +66,16 @@ class Tour extends CI_Controller
         goHome();
     }
 
+    public function tourPreview($id) {
+        if (isUserLogged()) {
+            $this->load->view(getHeader());
+            $this->load->model('mTour');
+            $tour_data = $this->mTour->getTourById($id)[0];
+            $this->parser->parse('vTourPreview', $tour_data);
+        } else {
+            $this->load->view(getHeader());
+        }
+    }
     public function tourInfo()
     {
         $link = $_SERVER['PHP_SELF'];
@@ -79,10 +89,35 @@ class Tour extends CI_Controller
 
             $this->parser->parse('vTourInfo', $data[0]);
 
-
         } else {
             $this->load->view(getHeader());
         }
+    }
+
+    public function tourEdit($id) {
+        if (isUserLogged()) {
+            $this->load->view(getHeader());
+            $this->load->model('mTour');
+            $tour_data = $this->mTour->getTourById($id)[0];
+            $this->parser->parse('vTourEdit', $tour_data);
+        } else {
+            $this->load->view(getHeader());
+        }
+    }
+
+    public function newDataTour(){
+                
+        $new_values = array();
+        $new_values['tur_name'] = $this->input->post("tur_name");
+        $new_values['tur_description'] = $this->input->post("tur_description");
+        $new_values['dt_ini'] = $this->input->post("dt_ini");
+        $new_values['dt_end'] = $this->input->post("dt_end");
+        $new_values['pk'] = $this->input->post("pk");
+
+        $this->load->model('mTour');
+        $test = $this->mTour->updateTour($new_values);
+       
+        $this->tourEdit($new_values['pk']);
     }
 
     public function tourAdd($tourPK) {
