@@ -37,11 +37,11 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`cat_PK`, `cat_name`) VALUES
 (1, 'Copas'),
-(2, 'Amigos'),
+(2, 'Espectaculo'),
 (3, 'Deportes'),
 (4, 'Exploración'),
 (5, 'Música'),
-(6, 'Ocio');
+(6, 'Culto');
 
 -- --------------------------------------------------------
 

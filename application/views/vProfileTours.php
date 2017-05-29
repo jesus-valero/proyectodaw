@@ -12,10 +12,10 @@
 
 <div id="profileContent">
     <aside>
-        <img src="http://www.lorempixel.com/200/200">
+        <img src="<?php echo base_url() ?>img/profile.png">
         <h1><?php echo $_SESSION['username'] ?></h1>
         <p id="address">Addesss</p>
-        <a href="<?php echo base_url() . "Profile/travels" ?>">Mis viajes</a>
+        <a href="<?php echo base_url() . "Profile/travels" ?>">Mis grupos</a>
         <a href="<?php echo base_url() . "Profile/tours" ?>">Mis tours</a>
         <a href="">Editar</a>
     </aside>
@@ -32,9 +32,7 @@
 </div>
 
 <script>
-    $.get("https://ipinfo.io", function (response) {
-        console.log(response.ip, response.country);
-    }, "jsonp");
+
 
     $(document).ready(function () {
 
@@ -60,16 +58,9 @@
 
     });
 
-     //Imagenes: https://source.unsplash.com
-//        $.get("ipinfo.io/json", function(response) {
-//            console.log(response.city + ", " + response.region);
-//            var address = response.city + ", " + response.region + ", " + response.country;
-//            $("#address").text(address);
-//
-//        }, "jsonp");
-
-
-
+    $.getJSON("http://ip-api.com/json", function(data) {
+        $("#address").text(data.city + ", " + data.regionName);
+    });
 
     var imagenesTotales = document.getElementsByClassName("imgTour");
 

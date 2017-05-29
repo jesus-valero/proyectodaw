@@ -100,7 +100,7 @@
     }
 
     #messages {
-        background: #e9e9e9;
+        background: #333333;
     }
 
     .message {
@@ -217,10 +217,10 @@
 
 <div id="profileContent">
     <aside>
-        <img src="http://www.lorempixel.com/200/200">
-        <h1>Juan Daniel Quispe</h1>
+        <img src="<?php echo base_url() ?>img/profile.png">
+        <h1><?php echo $_SESSION['username'] ?></h1>
         <p id="address">Addesss</p>
-        <a href="<?php echo base_url() . "Profile/travels" ?>">Mis viajes</a>
+        <a href="<?php echo base_url() . "Profile/travels" ?>">Mis grupos</a>
         <a href="<?php echo base_url() . "Profile/tours" ?>">Mis tours</a>
         <a href="">Editar</a>
     </aside>

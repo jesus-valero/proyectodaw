@@ -82,7 +82,6 @@
 
     form input[type='submit'] {
         font-size: 5vh;
-        width: 10vh;
     }
 
 </style>

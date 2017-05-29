@@ -46,7 +46,7 @@
 </div>
 <div class="comments">
     <div class="box">
-        <img src="http://www.lorempixel.com/200/200">
+        <img src="<?php echo base_url() ?>img/user1.png">
         <div class="stars">
             <img src="<?php echo base_url(); ?>img/star.png">
             <img src="<?php echo base_url(); ?>img/star.png">
@@ -59,7 +59,7 @@
         <p class="from">Italia</p>
     </div>
     <div class="box">
-        <img src="http://www.lorempixel.com/200/200">
+        <img src="<?php echo base_url() ?>img/user2.png">
         <div class="stars">
             <img src="<?php echo base_url(); ?>img/star.png">
             <img src="<?php echo base_url(); ?>img/star.png">
@@ -72,7 +72,7 @@
     </div>
 
     <div class="box">
-        <img src="http://www.lorempixel.com/200/200">
+        <img src="<?php echo base_url() ?>img/user3.png">
         <div class="stars">
             <img src="<?php echo base_url(); ?>img/star.png">
             <img src="<?php echo base_url(); ?>img/star.png">

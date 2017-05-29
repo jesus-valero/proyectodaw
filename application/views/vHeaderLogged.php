@@ -24,9 +24,9 @@
     <a href="<?php echo base_url(); ?>/">Grande</a>
     <div class="submenu">
         <a href="<?php echo base_url('Tour'); ?>">Explorar</a>
-        <a href="<?php echo base_url('Tour/create'); ?>">Crear tour</a>
+        <a href="<?php echo base_url('Tour/create'); ?>">Crear actividad</a>
         <a href="<?php echo base_url('Profile/travels'); ?>">Perfil</a>
-        <a href="<?php echo base_url('Login/closeSession'); ?>">Cerrar Sesión</a>
+        <a href="<?php echo base_url('Login/closeSession'); ?>">Cerrar sesión</a>
         <p style="color: white; padding: 0; margin: 0; align-self: center" >Bienvenido <?php echo $_SESSION['username'] ?></p>
     </div>
 </header>

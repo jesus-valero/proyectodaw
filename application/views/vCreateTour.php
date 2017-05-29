@@ -68,16 +68,16 @@
             <ol id="selectable">
                 <li class="ui-widget-content" value="1">Copas</li>
                 <li class="ui-widget-content" value="4">Exploración</li>
-                <li class="ui-widget-content" value="2">Amigos</li>
+                <li class="ui-widget-content" value="2">Espectáculo</li>
                 <li class="ui-widget-content" value="5">Música</li>
                 <li class="ui-widget-content" value="3">Deportes</li>
-                <li class="ui-widget-content" value="6">Ocio</li>
+                <li class="ui-widget-content" value="6">Culto</li>
             </ol>
 
 
             <input type="text" value="0" name="category" id="category" hidden>
             <input type="text" value="0" name="loccity" id="loccity" hidden>
-            <input type="submit" value="Crear tour!" class="crearTour">
+            <input type="submit" value="Crear!" class="crearTour">
 
         </form>
     </div>

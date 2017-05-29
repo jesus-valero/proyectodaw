@@ -76,6 +76,7 @@ section {
     width: 80%;
     border: 3px solid black;
     margin-top: 2vh;
+    text-decoration: none;
 }
 
 .itemTrour > * {
@@ -83,3 +84,7 @@ section {
     color: #333333;
 }
 
+.itemTrour h1 {
+    color: rgb(59, 142, 186);
+
+}

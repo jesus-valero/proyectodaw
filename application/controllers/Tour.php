@@ -108,6 +108,8 @@ class Tour extends CI_Controller
         } else {
             $this->load->view(getHeader());
         }
+
+        $this->load->view('vFooter');
     }
 
     public function newDataTour(){

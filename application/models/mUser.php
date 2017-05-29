@@ -74,7 +74,6 @@ class mUser extends CI_Model
         $tours = [];
 
         $stmt = getdb()->prepare("SELECT * FROM tours where tur_FK_usr_PK = :pk and ( DATEDIFF(tur_dt_end,NOW())  >0 or (tur_dt_end = '0000-00-00 00:00:00'))");
-        //$stmt = getdb()->prepare("SELECT * FROM tours where tur_FK_usr_PK = :pk and  DATEDIFF(tur_dt_end,NOW())  >0");
         $stmt->bindValue(":pk", $pk);
 
         if ($stmt->execute()) {
@@ -98,7 +97,7 @@ class mUser extends CI_Model
             // Por cada tour subscrito, buscamos su LAT y su Creador
             // PK tour
 
-            foreach (getdb()->query("SELECT u.usr_name AS owner, l.loc_city AS city, t.tur_name as tur_name FROM users u JOIN tours t ON (u.usr_PK = t.tur_FK_usr_PK) JOIN location l ON ( DATEDIFF(tur_dt_end,NOW())  >0 and t.tur_FK_loc_PK = l.loc_PK ) WHERE t.tur_PK = " . $item['pk']) AS $subItem) {
+            foreach (getdb()->query("SELECT u.usr_name AS owner, l.loc_city AS city, t.tur_name as tur_name FROM users u JOIN tours t ON (u.usr_PK = t.tur_FK_usr_PK) JOIN location l ON (  t.tur_FK_loc_PK = l.loc_PK ) WHERE t.tur_PK = " . $item['pk']) AS $subItem) {
                 $result[] = array('pk' => $item['pk'], 'tur_name' => $subItem['tur_name'], 'city' => $subItem['city'], 'owner' => $subItem['owner'], 'date' => $item['joined']);
 
             }
