@@ -12,7 +12,7 @@ require_once('Common.php');
 class Tour extends CI_Controller
 {
 
-    public function index()
+    public function index($lat = null, $lng = null)
     {
         $this->load->view(getHeader());
 
@@ -63,18 +63,23 @@ class Tour extends CI_Controller
         $this->load->model('mTour');
         $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address, $locCity);
 
-        goHome();
+        header('Location: ' . base_url(). "Tour" );
+        //goHome();
     }
 
     public function tourPreview($id) {
         if (isUserLogged()) {
             $this->load->view(getHeader());
             $this->load->model('mTour');
-            $tour_data = $this->mTour->getTourById($id)[0];
+            $tour_data = $this->mTour->getTourInfo($id)[0];
+
             $this->parser->parse('vTourPreview', $tour_data);
         } else {
             $this->load->view(getHeader());
         }
+
+        $this->load->view('vFooter');
+
     }
     public function tourInfo()
     {
@@ -135,6 +140,12 @@ class Tour extends CI_Controller
     }
 
 
+    public function postNewMessage($tourPK)
+    {
+        $this->load->model('mTour');
+        $this->mTour->insertNewMessage($this->input->post('pk'), $_SESSION['pk'], $this->input->post('message'));
 
+        header('location: '. base_url() . "Tour/tourPreview/" . $tourPK . "/chat");
+    }
 
 }

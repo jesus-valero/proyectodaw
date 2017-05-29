@@ -61,9 +61,10 @@ $(document).ready(function () {
     // MARK: - MAPS
 
     var date = new Date();
-    var currentDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " 00:00:00";
+    var currentDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " 00:00:00";
     $("#sin-limite-ini").attr('value', currentDate);
     $("#sin-limite-end").attr('value', "NULL");
+
 
     var currPos = {lat: 41.388845, lng: 2.175996};
     var markers = [];
@@ -84,7 +85,9 @@ $(document).ready(function () {
         mapTypeId: 'roadmap',
         disableDefaultUI: true,
         streetViewControl: false,
-        styles: myStyles
+        styles: myStyles,
+        minZoom: 1
+
     });
 
     var panorama = new google.maps.StreetViewPanorama(
@@ -99,6 +102,29 @@ $(document).ready(function () {
             linksControl: false
 
         });
+
+    google.maps.event.addDomListener(window,'resize',function(){
+
+        if(map.get('bounds_listener')){
+            google.maps.event.removeListener(map.get('bounds_listener'));
+        }
+        else{
+            map.set('_center',map.getCenter());
+        }
+
+        map.setOptions({
+            minZoom: Math.ceil(Math.log(map.getDiv().offsetWidth/256)/Math.log(2))
+        });
+
+        map.setCenter(map.get('_center'));
+
+        map.set('bounds_listener', google.maps.event.addListener(map, 'bounds_changed', function(){
+            this.set('_center',this.getCenter());
+        }));
+    });
+
+//trigger resize to set initial value
+    google.maps.event.trigger(window,'resize');
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);

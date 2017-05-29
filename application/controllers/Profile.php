@@ -23,6 +23,7 @@ class Profile extends CI_Controller
         $this->load->model('mUser');
         $tours['data'] = $this->mUser->getMyTours($_SESSION['pk']);
 
+
         $this->parser->parse('vProfileTravels', $tours);
         $this->load->view('vFooter');
     }
@@ -32,12 +33,10 @@ class Profile extends CI_Controller
         $this->load->view(getHeader());
         $this->load->model('mUser');
         $tours['data'] = $this->mUser->getToursJoined();
+
         $this->parser->parse('vProfileTours', $tours);
         $this->load->view('vFooter');
+
     }
 
-    function travelsInfo($id)
-    {
-        echo "hola: " . $id;
-    }
 }

@@ -1,10 +1,77 @@
 footer {
-    height: 30vh;
+    height: 50vh;
     background: #333333;
-    position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
-    padding: 1rem;
-    text-align: center;
+    text-align: left;
+
+    display: flex;
+    justify-content: center;
+}
+
+footer h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.lfooter {
+    height: 5vh;
+    width:20vw;
+    padding-left: 10vh;
+    padding-right: 20vh;
+}
+
+.lfooter h1 {
+    color: white;
+}
+
+.lfooter>p:nth-child(2) {
+    color: gray;
+    font-size: 1.8vh;
+    letter-spacing: 1px;
+}
+
+.lfooter>p:nth-child(3) {
+    color: gray;
+    font-size: 1.4vh;
+    letter-spacing: 1px;
+}
+
+.cfooter {
+    width: 20vh;
+    height: 20vh;
+    padding-right: 10vh;
+}
+
+
+.cfooter > * {
+    color: white;
+    margin-bottom: 2.5vh;
+    font-size: 1.7vh;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.cfooter>:nth-child(1),.rfooter p {
+    color: gray !important;
+    font-size: 2vh;
+    padding-top: 0;
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.rfooter {
+    padding-left: 7vh;
+    padding-right: 20vh;
+}
+
+.rfooter img {
+    width: 3vh;
+    height:3vh;
+    cursor: pointer;
+}
+
+.lfooter, .cfooter, .rfooter {
+    margin-top: 10vh;
 }

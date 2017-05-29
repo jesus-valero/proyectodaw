@@ -17,7 +17,7 @@ function isUserLogged()
 
 function goHome()
 {
-    header('location: ' . base_url('Tour'));
+    header('location: ' . base_url(''));
 }
 
 function getHeader()
@@ -29,4 +29,3 @@ function getHeader()
 
     }
 }
-

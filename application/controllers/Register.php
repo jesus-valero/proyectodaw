@@ -10,13 +10,13 @@ class Register extends CI_Controller
 {
     public function index()
     {
-        echo "En register";
         $this->load->view('vRegister');
     }
 
     public function check()
     {
         $email = $this->input->post("email");
+        $username = $this->input->post("username");
         $password = $this->input->post("password");
         $repassword = $this->input->post("repassword");
 
@@ -27,15 +27,16 @@ class Register extends CI_Controller
             switch ($valido) {
                 case VALIDATION_STATUS::WRONG_PASSWORD:
                     // TODO: Reload page
+                    header('location: ' . base_url('Register'));
                     break;
                 case VALIDATION_STATUS::VALIDATION_USER_OK:
                     // TODO: procedemos a crear al usuario
-                    $this->mUser->addNewAccount($email, $password);
-                    header('location: ' . base_url('Tour'));
+                    $this->mUser->addNewAccount($email, $password, $username);
+                    header('location: ' . base_url('Login/index'));
 
                     break;
                 case VALIDATION_STATUS::USER_ALREADY_EXISTS:
-                    // TODO: Usuario ya existe!
+                    header('location: ' . base_url('Register'));
                     break;
             }
 

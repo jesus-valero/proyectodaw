@@ -12,16 +12,16 @@
 
 <div id="profileContent">
     <aside>
-        <img src="www.lorempixel.com/200/200">
-        <h1>Juan Daniel Quispe</h1>
+        <img src="http://www.lorempixel.com/200/200">
+        <h1><?php echo $_SESSION['username'] ?></h1>
         <p id="address">Addesss</p>
-        <a href="<?php echo base_url()."Profile/travels" ?>">Mis viajes</a>
-        <a href="<?php echo base_url()."Profile/tours" ?>">Mis tours</a>
+        <a href="<?php echo base_url() . "Profile/travels" ?>">Mis viajes</a>
+        <a href="<?php echo base_url() . "Profile/tours" ?>">Mis tours</a>
         <a href="">Editar</a>
     </aside>
-    <section>
+    <section id="section">
         {data}
-        <a class="itemTour" href="<?php echo base_url(). "Tour/tourPreview" ?>/{pk}">
+        <a class="itemTour" href="<?php echo base_url() . "Tour/tourPreview" ?>/{pk}">
             <div class="imgTour"></div>
             <h1>{city}</h1>
             <p>{tur_name}</p>
@@ -32,28 +32,48 @@
 </div>
 
 <script>
+    $.get("https://ipinfo.io", function (response) {
+        console.log(response.ip, response.country);
+    }, "jsonp");
 
     $(document).ready(function () {
 
+        var sizeResults = document.getElementsByClassName("itemTour");
+
+        if (sizeResults.length == 0) {
+
+            var root = $("<div style='display: flex; flex-direction: column'></div>");
+            $("#section").append(root);
+
+
+            var imagen = $("<div style='height: 35vh;width: 35vh;'></div>");
+            imagen.css("background","url('<? echo base_url(); ?>img/airplane.png')");
+            imagen.css("background-size","cover");
+
+            var texto = $("<p style='text-align: center; font-size: 2vh; color: white'>Aún no te has unido a ningún viaje</p>");
+            var boton = $("<a href='<? echo base_url(); ?>Tour' style='padding: 1vh; font-size: 2vh; color: white; background: rgb(59, 142, 186); width: 15vh;text-align:center; margin-left: auto; margin-right: auto;text-decoration: none'>Buscar</a>");
+
+            root.append(imagen);
+            root.append(texto);
+            root.append(boton);
+        }
 
     });
 
-    // Imagenes: https://source.unsplash.com
-//    $.get("ipinfo.io/json", function(response) {
-//        console.log(response.city + ", " + response.region);
-//        var address = response.city + ", " + response.region + ", " + response.country;
-//        $("#address").text(address);
+     //Imagenes: https://source.unsplash.com
+//        $.get("ipinfo.io/json", function(response) {
+//            console.log(response.city + ", " + response.region);
+//            var address = response.city + ", " + response.region + ", " + response.country;
+//            $("#address").text(address);
 //
-//    }, "jsonp");
+//        }, "jsonp");
 
-    $.get("https://ipinfo.io", function(response) {
-        console.log(response.ip, response.country);
-    }, "jsonp");
+
 
 
     var imagenesTotales = document.getElementsByClassName("imgTour");
 
-    for(var i = 0; i < imagenesTotales.length; i++) {
-        imagenesTotales[i].style.background = "url('https://source.unsplash.com/category/nature/45"+i+"x450')";
+    for (var i = 0; i < imagenesTotales.length; i++) {
+        imagenesTotales[i].style.background = "url('https://source.unsplash.com/category/nature/45" + i + "x450')";
     }
 </script>

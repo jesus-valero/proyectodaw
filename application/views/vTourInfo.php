@@ -62,6 +62,27 @@
                 <p>{dt_end}</p>
             </div>
         </div>
+
+        <p id="lat" hidden>{loc_lat}</p>
+        <p id="lng" hidden>{loc_lng}</p>
     </div>
 
 </section>
+
+
+<script>
+    $(document).ready(function () {
+
+        var lat = $("#lat").text();
+        var lng = $("#lng").text();
+
+        $("#content").click(function(){
+            $(this).children(".children").toggle();
+            window.location.replace("http://[::1]/proyectodaw/Tour/index/"+lat+"/"+lng);
+
+        });
+        $("#content div").click(function(e) {
+            e.stopPropagation();
+        });
+    });
+</script>

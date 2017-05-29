@@ -27,16 +27,17 @@ class mUser extends CI_Model
         return $result;
     }
 
-    public function addNewAccount($email, $password)
+    public function addNewAccount($email, $password, $username)
     {
         $salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
         $saltedPW = $password . $salt;
         $hashedPW = hash('sha256', $saltedPW);
 
-        $stmt = getdb()->prepare("INSERT INTO users(usr_email, usr_password, usr_salt) values( :email, :password, :salt )");
+        $stmt = getdb()->prepare("INSERT INTO users(usr_email, usr_password, usr_salt, usr_name) values( :email, :password, :salt, :user_name)");
         $stmt->bindValue(":email", $email);
         $stmt->bindValue(":password", $hashedPW);
         $stmt->bindValue(":salt", $salt);
+        $stmt->bindValue(":user_name", $username);
 
         $stmt->execute();
 
@@ -53,13 +54,16 @@ class mUser extends CI_Model
         $saltedPW = $password . $salt;
         $hashedPW = hash('sha256', $saltedPW);
 
-        $stmt = getdb()->prepare("SELECT usr_PK FROM users WHERE upper(usr_email) = :email and usr_password = :password");
+        $stmt = getdb()->prepare("SELECT usr_PK, usr_name FROM users WHERE upper(usr_email) = :email and usr_password = :password");
         $stmt->bindValue(":email", $email);
         $stmt->bindValue(":password", $hashedPW);
         $stmt->execute();
 
-        if ($primaryKey = $stmt->fetchColumn(0)) {
-            return $primaryKey;
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result == true || count($result)>0 ) {
+            return $result;
+
         } else {
             return -1;
         }
@@ -69,7 +73,8 @@ class mUser extends CI_Model
     {
         $tours = [];
 
-        $stmt = getdb()->prepare("SELECT * FROM tours where tur_FK_usr_PK = :pk");
+        $stmt = getdb()->prepare("SELECT * FROM tours where tur_FK_usr_PK = :pk and ( DATEDIFF(tur_dt_end,NOW())  >0 or (tur_dt_end = '0000-00-00 00:00:00'))");
+        //$stmt = getdb()->prepare("SELECT * FROM tours where tur_FK_usr_PK = :pk and  DATEDIFF(tur_dt_end,NOW())  >0");
         $stmt->bindValue(":pk", $pk);
 
         if ($stmt->execute()) {
@@ -93,7 +98,7 @@ class mUser extends CI_Model
             // Por cada tour subscrito, buscamos su LAT y su Creador
             // PK tour
 
-            foreach (getdb()->query("SELECT u.usr_name AS owner, l.loc_city AS city, t.tur_name as tur_name FROM users u JOIN tours t ON (u.usr_PK = t.tur_FK_usr_PK) JOIN location l ON (t.tur_FK_loc_PK = l.loc_PK ) WHERE t.tur_PK = " . $item['pk']) AS $subItem) {
+            foreach (getdb()->query("SELECT u.usr_name AS owner, l.loc_city AS city, t.tur_name as tur_name FROM users u JOIN tours t ON (u.usr_PK = t.tur_FK_usr_PK) JOIN location l ON ( DATEDIFF(tur_dt_end,NOW())  >0 and t.tur_FK_loc_PK = l.loc_PK ) WHERE t.tur_PK = " . $item['pk']) AS $subItem) {
                 $result[] = array('pk' => $item['pk'], 'tur_name' => $subItem['tur_name'], 'city' => $subItem['city'], 'owner' => $subItem['owner'], 'date' => $item['joined']);
 
             }
@@ -127,7 +132,18 @@ class mUser extends CI_Model
             $result[0] = $result[0] + array('people' => "Se han apuntado " . ($max[0]['ene']) . " persona(s)");
         }
 
-        $result[0]['dt_ini'] = "Hace " . $this->getDaysRange(substr($result[0]['dt_ini'], 0, 10)) . " dias";
+        if ($this->getDaysRange(substr($result[0]['dt_ini'], 0, 10)) == 0) {
+            $result[0]['dt_ini'] = "Creado hoy";
+        } else {
+
+            if ($this->getDaysRange(substr($result[0]['dt_ini'], 0, 10)) > 0) {
+                $result[0]['dt_ini'] = "Creado hace " . $this->getDaysRange(substr($result[0]['dt_ini'], 0, 10)) . " dias";
+            } else {
+                $result[0]['dt_ini'] = "Empezará en " . -$this->getDaysRange(substr($result[0]['dt_ini'], 0, 10)) . " dias";
+
+            }
+        }
+
 
         if (strcmp($result[0]['dt_end'], "0000-00-00 00:00:00") == 0) {
             $result[0]['dt_end'] = "Sin fecha limite";

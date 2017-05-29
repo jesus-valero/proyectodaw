@@ -21,11 +21,35 @@
 
 <body>
 <header>
-    <a href="<?php echo base_url('Tour'); ?>">Home</a>
-    <a href="<?php echo base_url('Tour/create'); ?>">Crear tour</a>
-    <a href="<?php echo base_url('Profile/travels'); ?>">Perfil</a>
-    <a href="<?php echo base_url('Login/closeSession'); ?>">Cerrar Sesión</a>
+    <a href="<?php echo base_url(); ?>/">Grande</a>
+    <div class="submenu">
+        <a href="<?php echo base_url('Tour'); ?>">Explorar</a>
+        <a href="<?php echo base_url('Tour/create'); ?>">Crear tour</a>
+        <a href="<?php echo base_url('Profile/travels'); ?>">Perfil</a>
+        <a href="<?php echo base_url('Login/closeSession'); ?>">Cerrar Sesión</a>
+        <p style="color: white; padding: 0; margin: 0; align-self: center" >Bienvenido <?php echo $_SESSION['username'] ?></p>
+    </div>
 </header>
+
+<style>
+    .submenu {
+        margin-left: auto;
+        margin-right: 10vh;
+        display: flex;
+        justify-content: space-between;
+        width: 75vw;
+    }
+
+
+    .submenu > a {
+        text-decoration: none;
+        color: white;
+        padding: .75vh;
+        border: 2px solid rgb(59, 142, 186);
+        border-radius: 5px;
+
+    }
+</style>
 
 </body>
 </html>

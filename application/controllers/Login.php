@@ -27,10 +27,18 @@ class Login extends CI_Controller
 
         $this->load->model('mUser');
 
-        if (($pk = $this->mUser->requestLogin($email, $password)) > 0) {
-            $_SESSION['pk'] = $pk;
+
+
+        if ( ($data =  $this->mUser->requestLogin($email, $password)) > 0) {
+
+            $_SESSION['pk'] = $data[0]['usr_PK'];
+            $_SESSION['username'] = $data[0]['usr_name'];
+
+            goHome();
+
+        } else {
+            header("Location: " . base_url(). "Login/index");
         }
-        goHome();
 
     }
 

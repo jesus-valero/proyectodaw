@@ -5,15 +5,35 @@ body {
 
 header {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    height: 10vh;
-    width: 100%;
-    background: grey;
+    height: 5vh;
+    width: 100vw;
+    background: #333333;
 }
 
-header a {
-    padding: 1.5vh;
+header > a {
+    margin-left: 10vh;
     text-decoration: none;
-    border: 1px solid silver;
+    color: white;
+    font-size: 2.5vh;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.submenu {
+    margin-left: auto;
+    margin-right: 10vh;
+    display: flex;
+    justify-content: space-between;
+    width: 20vh;
+}
+
+
+.submenu > a {
+    text-decoration: none;
+    color: white;
+    padding: .75vh;
+    border: 2px solid rgb(59, 142, 186);
+    border-radius: 5px;
+
 }

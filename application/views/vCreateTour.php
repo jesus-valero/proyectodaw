@@ -22,7 +22,7 @@
             <input type="text" name="name">
 
             <h4>Descripción</h4>
-            <textarea name="description" rows="10"></textarea>
+            <textarea name="description" rows="6"></textarea>
 
             <div class="disponibilidad-ini">
                 <fieldset>
@@ -55,7 +55,7 @@
 
             <div id="posicion-map">
                 <fieldset>
-                    <legend><h4>Seleccione una ubicacion en el mapa</h4></legend>
+                    <legend><h4>Previsualización</h4></legend>
 
                     <div id="mapCapture"></div>
                     <input type="text" name="lat" value="0" id="lat" hidden>

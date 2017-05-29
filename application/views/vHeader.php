@@ -21,8 +21,11 @@
 
 <body>
 <header>
-    <a href="<?php echo base_url('Tour'); ?>">Home</a>
-    <a href="<?php echo base_url('Login'); ?>">Iniciar sesion</a>
+    <a href="<?php echo base_url(); ?>/">Grande</a>
+    <div class="submenu">
+        <a href="<?php echo base_url('Login'); ?>">Iniciar sesión</a>
+        <a href="<?php echo base_url('Register'); ?>">Registrarse</a>
+    </div>
 </header>
 
 </body>

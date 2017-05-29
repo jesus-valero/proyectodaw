@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: flex-start;
     background: silver;
+    padding-bottom: 35vh;
 }
 
 aside {
@@ -11,12 +12,12 @@ aside {
     height: 60vh;
     width: 20vw;
     background: #333333;
-    margin-top: 2vh;
+    margin-top: 10vh;
     align-items: center;
 }
 
 aside img {
-    border: 2vh solid grey;
+    border: 1vh solid rgb(59, 142, 186);
     background: silver;
     border-radius: 50%;
     height: 20vh;
@@ -36,9 +37,13 @@ aside a {
 }
 
 aside > a:hover {
-    background: tomato;
-}
+    background: rgb(59, 142, 186);
+    color: white;
 
+}
+aside h1, aside p {
+    color: white;
+}
 h1 {
     margin: 0;
 }
@@ -52,12 +57,13 @@ section {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-around;
-    margin-top: 2vh;
+    margin-top: 10vh;
     width: 50vw;
-    background: gray;
+    background: #333333;
     margin-left: 2vh;
     overflow-y: scroll;
     padding: 2vh;
+    padding-bottom: 5vh;
 }
 
 .itemTour {
@@ -127,8 +133,4 @@ section {
 
 }
 
-/*Activar*/
-footer {
-    display: none;
-}
 

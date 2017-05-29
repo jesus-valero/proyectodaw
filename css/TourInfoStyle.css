@@ -7,14 +7,14 @@ section {
 section > img {
     position: absolute;
     width: 100vw !important;
-    height: 90vh !important;
+    height: 95vh !important;
     filter: blur(13px)
 }
 
 #content {
     position: absolute;
     width: 100vw !important;
-    height: 90vh !important;
+    height: 95vh !important;
     background: rgba(0,0,0,.6);
     z-index:3;
     display: flex;
