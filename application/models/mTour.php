@@ -72,8 +72,9 @@ class mTour extends CI_Model
                 "date_end"=> $tour["tur_dt_end"],
                 "active" => time() > $dtIni ? true : false); // No tocar
 
+
             $result['tours'] = $tours;
-        }  
+        }
 
         return $result;
 

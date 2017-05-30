@@ -21,7 +21,7 @@
 
 <body>
 <header>
-    <a href="<?php echo base_url(); ?>/">Grande</a>
+    <a href="<?php echo base_url(); ?>/">BeMates</a>
     <div class="submenu">
         <a href="<?php echo base_url('Tour'); ?>">Explorar</a>
         <a href="<?php echo base_url('Tour/create'); ?>">Crear actividad</a>

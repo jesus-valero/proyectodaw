@@ -112,7 +112,7 @@
 
     form label {
         font-size: 2vh;
-        color: gold;
+        color: white;
     }
 
     form input[type='text'],form input[type='password'] {

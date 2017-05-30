@@ -19,20 +19,20 @@ class Tour extends CI_Controller
         // TODO: get all tours
         $this->load->model('mTour');
 
-        $locations = $this->mTour->getTours()['tours'];
-        $categories = $this->mTour->getTours()['category'];
-        isset($_SESSION['pk']) ? $loged = true : $loged = false;
+        $result = $this->mTour->getTours();
+
+        $locations = $result['tours'];
+        $categories = $result['category'];
+
 
         $data['locations'] = json_encode($locations);
         $data['categories'] = json_encode($categories);
+
+        isset($_SESSION['pk']) ? $loged = true : $loged = false;
+
         $data['loged'] = json_encode($loged);
 
         $this->load->view('vMap', $data);
-
-        // TODO: get all tours
-        $this->load->model('mTour');
-        $this->mTour->getTours();
-        /*$this->load->view('vFooter');*/
 
     }
 
@@ -63,11 +63,12 @@ class Tour extends CI_Controller
         $this->load->model('mTour');
         $this->mTour->addNewLocalTour($_SESSION['pk'], $tourName, $tourDescription, $dtIni, $dtEnd, $category, $lat, $lng, $address, $locCity);
 
-        header('Location: ' . base_url(). "Tour" );
+        header('Location: ' . base_url() . "Tour");
         //goHome();
     }
 
-    public function tourPreview($id) {
+    public function tourPreview($id)
+    {
         if (isUserLogged()) {
             $this->load->view(getHeader());
             $this->load->model('mTour');
@@ -81,10 +82,11 @@ class Tour extends CI_Controller
         $this->load->view('vFooter');
 
     }
+
     public function tourInfo()
     {
         $link = $_SERVER['PHP_SELF'];
-        $link_array = explode('/',$link);
+        $link_array = explode('/', $link);
 
         if (isUserLogged()) {
             $this->load->view(getHeader());
@@ -99,7 +101,8 @@ class Tour extends CI_Controller
         }
     }
 
-    public function tourEdit($id) {
+    public function tourEdit($id)
+    {
         if (isUserLogged()) {
             $this->load->view(getHeader());
             $this->load->model('mTour');
@@ -112,8 +115,9 @@ class Tour extends CI_Controller
         $this->load->view('vFooter');
     }
 
-    public function newDataTour(){
-                
+    public function newDataTour()
+    {
+
         $new_values = array();
         $new_values['tur_name'] = $this->input->post("tur_name");
         $new_values['tur_description'] = $this->input->post("tur_description");
@@ -123,21 +127,23 @@ class Tour extends CI_Controller
 
         $this->load->model('mTour');
         $test = $this->mTour->updateTour($new_values);
-       
+
         $this->tourEdit($new_values['pk']);
     }
 
-    public function tourAdd($tourPK) {
+    public function tourAdd($tourPK)
+    {
         $this->load->model('mUser');
         $this->mUser->joinUserToTour($tourPK, $_SESSION['pk']);
 
-        header('location: '. base_url("Tour/tourInfo/". $tourPK));
+        header('location: ' . base_url("Tour/tourInfo/" . $tourPK));
     }
 
-    public function tourRemove($tourPK) {
+    public function tourRemove($tourPK)
+    {
         $this->load->model('mUser');
         $this->mUser->removeUserTour($tourPK, $_SESSION['pk']);
-        header('location: '. base_url("Tour/tourInfo/". $tourPK));
+        header('location: ' . base_url("Tour/tourInfo/" . $tourPK));
 
     }
 
@@ -147,7 +153,7 @@ class Tour extends CI_Controller
         $this->load->model('mTour');
         $this->mTour->insertNewMessage($this->input->post('pk'), $_SESSION['pk'], $this->input->post('message'));
 
-        header('location: '. base_url() . "Tour/tourPreview/" . $tourPK . "/chat");
+        header('location: ' . base_url() . "Tour/tourPreview/" . $tourPK . "/chat");
     }
 
 }

@@ -16,12 +16,11 @@
     <!--    Web JS/CSS-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/HeaderStyle.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/FooterStyle.css"/>
-
 </head>
 
 <body>
 <header>
-    <a href="<?php echo base_url(); ?>/">Grande</a>
+    <a href="<?php echo base_url(); ?>/">BeMates</a>
     <div class="submenu">
         <a href="<?php echo base_url('Login'); ?>">Iniciar sesión</a>
         <a href="<?php echo base_url('Register'); ?>">Registrarse</a>
